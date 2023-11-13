@@ -6,14 +6,16 @@ def buildJar() {
 def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t nanajanashia/demo-app:jma-2.0 .'
+        sh "docker build -t karosi12/demo-app:${IMAGE_NAME} ."
         sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push nanajanashia/demo-app:jma-2.0'
+        sh "docker push karosi12/demo-app:${IMAGE_NAME}"
     }
 } 
 
 def deployApp() {
-    echo 'deploying the application...'
+    echo "Deploying the docker image..."
+    sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
+    sh 'envsubst < kubernetes/service.yaml | kubectl apply -f -'
 } 
 
 return this
