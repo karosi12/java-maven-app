@@ -13,6 +13,20 @@ def ansibleSetUp() {
     }
 }
 
+def executeAnsible() {
+    echo "calling ansible playbook to configure ec2 instances"
+    def remote = [:]
+    remote.name = "ansible-server"
+    remote.host = "18.194.28.116"
+    remote.alloAnyHosts = true
+
+    withCredentials([sshUserPrivateKey(credentialsId: 'ec2-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
+        remote.user = user
+        remote.identityFile = keyfile
+        sshCommand remote: remote, command: "ls -l"
+    }
+}
+
 def buildJar() {
     echo "building the application..."
     sh 'mvn package'

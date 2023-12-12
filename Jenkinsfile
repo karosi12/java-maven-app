@@ -27,6 +27,13 @@ pipeline {
                 }
             }
         }
+        stage('execute ansible playbook') {
+            steps {
+                script {
+                    gv.executeAnsible()
+                }
+            }
+        }
         /**
         stage("build jar") {
             steps {
