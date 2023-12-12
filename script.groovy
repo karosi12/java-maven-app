@@ -18,7 +18,7 @@ def executeAnsible() {
     def remote = [:]
     remote.name = "ansible-server"
     remote.host = "18.194.28.116"
-    remote.alloAnyHosts = true
+    remote.allowAnyHosts = true
 
     withCredentials([sshUserPrivateKey(credentialsId: 'ec2-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
         remote.user = user
