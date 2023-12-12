@@ -12,10 +12,18 @@ pipeline {
         DOCKER_REPO = "${DOCKER_REPO_SERVER}/java-maven-app"
     }
     stages {
+
         stage("init") {
             steps {
                 script {
                     gv = load "script.groovy"
+                }
+            }
+        }
+        stage('ansible') {
+            steps {
+                script {
+                    gv.ansibleSetUp()
                 }
             }
         }
