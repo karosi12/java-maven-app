@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-apt update
-apt install ansible -y
-apt install python3-pip -y
+sudo su
+
+apt-get update
+apt-get install ansible -y
+apt-get install python3-pip -y
 pip3 install boto3 botocore
