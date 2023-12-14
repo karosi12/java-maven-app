@@ -10,12 +10,28 @@ pipeline {
     environment {
         DOCKER_REPO_SERVER = '260269607025.dkr.ecr.eu-central-1.amazonaws.com'
         DOCKER_REPO = "${DOCKER_REPO_SERVER}/java-maven-app"
+        ANSIBLE_SERVER = "18.194.28.116"
     }
     stages {
+
         stage("init") {
             steps {
                 script {
                     gv = load "script.groovy"
+                }
+            }
+        }
+        stage('ansible') {
+            steps {
+                script {
+                    gv.ansibleSetUp()
+                }
+            }
+        }
+        stage('execute ansible playbook') {
+            steps {
+                script {
+                    gv.executeAnsible()
                 }
             }
         }
