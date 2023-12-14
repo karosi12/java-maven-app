@@ -10,7 +10,6 @@ def ansibleSetUp() {
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
             sh 'scp $keyfile ubuntu@$ANSIBLE_SERVER:/home/ubuntu/ssh-key.pem'  
         }
-        sh 'chmod 600 /home/ubuntu/ssh-key.pem'
     }
 }
 
@@ -24,6 +23,7 @@ def executeAnsible() {
     withCredentials([sshUserPrivateKey(credentialsId: 'ansible-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
         remote.user = user
         remote.identityFile = keyfile
+        sshCommand remote: remote, command: "chmod 600 /home/ubuntu/ssh-key.pem"
         sshScript remote: remote, script: "prepare-ansible-server.sh"
         sshCommand remote: remote, command: "ansible-playbook my-playbook.yaml"
     }
