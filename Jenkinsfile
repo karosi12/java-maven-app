@@ -4,9 +4,9 @@ def gv
 
 pipeline {
     agent any
-    // tools {
-    //     maven 'Maven'
-    // }
+    tools {
+        maven 'Maven'
+    }
     environment {
         DOCKER_REPO_SERVER = '260269607025.dkr.ecr.eu-central-1.amazonaws.com'
         DOCKER_REPO = "${DOCKER_REPO_SERVER}/java-maven-app"
@@ -35,7 +35,6 @@ pipeline {
                 }
             }
         }
-        /**
         stage("build jar") {
             steps {
                 script {
@@ -62,6 +61,5 @@ pipeline {
                 }
             }
         }
-        */
     }   
 }
