@@ -8,9 +8,9 @@ def ansibleSetUp() {
         sh "scp -o StrictHostKeyChecking=no ansible/* ubuntu@${ANSIBLE_SERVER}:/home/ubuntu"
 
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
-            sh 'scp $keyfile ubuntu@$ANSIBLE_SERVER:/home/ubuntu/ssh-key.pem'
-            sh 'chmod 600 /home/ubuntu/ssh-key.pem'
+            sh 'scp $keyfile ubuntu@$ANSIBLE_SERVER:/home/ubuntu/ssh-key.pem'  
         }
+        sh 'chmod 600 /home/ubuntu/ssh-key.pem'
     }
 }
 
